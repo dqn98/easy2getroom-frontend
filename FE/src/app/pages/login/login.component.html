@@ -1,0 +1,147 @@
+<div class="p-3">
+  <div class="theme-container">
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="my-3">
+      <mat-card [style.max-width.px]="500">
+        <div *ngIf="!isLoginWithSocialAccnount" fxLayout="column" fxLayoutAlign="center center" class="text-center">
+          <h1 class="uppercase">Sign In</h1>
+          <a mat-button routerLink="/register" color="accent" class="w-100">Don't have an account? Sign up now!</a>
+        </div>
+
+        <div *ngIf="isLoginWithSocialAccnount && !isEmailExisted" fxLayout="column" fxLayoutAlign="center center"
+          class="text-center">
+          <h1 class="uppercase">Required Infomation</h1>
+          <a mat-button routerLink="/login" color="accent" (click)="resetFormState()" class="w-100">if you already have an account, Login now</a>
+        </div>
+
+
+        <form *ngIf="!isLoginWithSocialAccnount" [formGroup]="loginForm"
+          (ngSubmit)="onLoginFormSubmit(loginForm.value)">
+          <mat-form-field appearance="outline" class="w-100 mt-2">
+            <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-error *ngIf="loginForm.controls.email.errors?.
+            required">Email is required</mat-error>
+            <mat-error *ngIf="loginForm.controls.email.hasError('minlength')">Email isn't long enough, minimum of 6
+              characters</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">lock</mat-icon>
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" formControlName="password" required
+              [type]="hide ? 'password' : 'text'">
+            <mat-error *ngIf="loginForm.controls.password.errors?.required">Password is required</mat-error>
+            <mat-error *ngIf="loginForm.controls.password.hasError('minlength')">Password isn't long enough, minimum of
+              6 characters</mat-error>
+            <button mat-icon-button matSuffix (click)="hide = !hide" type="button" class="text-muted">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="text-center mt-2">
+            <button mat-raised-button color="accent" class="uppercase" type="submit">
+              Sign to My Account
+            </button>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-3">
+            <div class="divider w-100"></div>
+            <h3 class="text-muted ws-nowrap fw-500 p-2">or Sign in with one click</h3>
+            <div class="divider w-100"></div>
+          </div>
+          <div class="text-center py-3">
+            <button mat-mini-fab color="primary" matTooltip="Facebook" type="button" class="mr-2"
+              (click)="signInWithFB()">
+              <svg class="mat-icon" viewBox="0 0 24 24">
+                <path
+                  d="M17,2V2H17V6H15C14.31,6 14,6.81 14,7.5V10H14L17,10V14H14V22H10V14H7V10H10V6A4,4 0 0,1 14,2H17Z" />
+              </svg>
+            </button>
+            <button mat-mini-fab color="primary" matTooltip="Google" type="button" class="ml-2"
+              (click)="signInWithGoogle()">
+              <svg class="mat-icon" viewBox="0 0 24 24">
+                <path
+                  d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <form *ngIf="isLoginWithSocialAccnount && !isEmailExisted" [formGroup]="externalInfo"
+          (ngSubmit)="onExternalInfoFormSubmit(loginForm.value)">
+
+          <!-- <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="authtoken" formControlName="authToken">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="provider" formControlName="provider">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="id" formControlName="id">
+          </mat-form-field> -->
+
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" required>
+            <mat-error *ngIf="externalInfo.controls.email.errors?.required">Email is required</mat-error>
+            <mat-error *ngIf="externalInfo.controls.email.hasError('invalidEmail')">Invalid email address
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">person_pin</mat-icon>
+            <mat-label>Full name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="externalInfo.controls.name.errors?.required">Full name is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">call</mat-icon>
+            <mat-label>Phone number</mat-label>
+            <input type="tel" matInput formControlName="phoneNumber" required>
+            <mat-error *ngIf="externalInfo.controls.phoneNumber.errors?.required">Phone number is required
+            </mat-error>
+            <mat-error *ngIf="externalInfo.controls.phoneNumber.hasError('invalidPhoneNumber')">Invalid
+              phone number
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">home</mat-icon>
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" required>
+            <mat-error *ngIf="externalInfo.controls.address.errors?.required">Address is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mt-1">
+            <mat-icon matPrefix class="mr-1 text-muted">cake</mat-icon>
+            <mat-label>Birthday</mat-label>
+            <input matInput formControlName="birthDay" [matDatepicker]="birthday" disabled>
+            <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+            <mat-datepicker #birthday disabled="false"></mat-datepicker>
+            <mat-error *ngIf="externalInfo.controls.birthDay.errors?.required">Birthday is required
+            </mat-error>
+          </mat-form-field>
+          <div class="text-center mt-2">
+            <button mat-raised-button color="accent" class="uppercase" type="submit">
+              Sign to My Account
+            </button>
+          </div>
+        </form>
+        <mat-card-actions fxLayoutAlign="end center">
+          <button mat-button>
+            <mat-icon class="text-muted">vpn_key</mat-icon>
+            <span class="mx-1">Reset Password</span>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

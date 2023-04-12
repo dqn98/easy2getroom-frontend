@@ -1,0 +1,53 @@
+<a mat-button [matMenuTriggerFor]="userMenu" #userMenuTrigger="matMenuTrigger">
+    <mat-icon class="mat-icon-sm">person</mat-icon>
+    <span fxShow="false" fxShow.gt-sm class="mx-1 uppercase">account</span>
+    <mat-icon class="mat-icon-sm caret">arrow_drop_down</mat-icon>
+</a>
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" xPosition="before" class="app-menu-panel user-menu">
+    <span (mouseleave)="userMenuTrigger.closeMenu()">
+        <div fxLayout="row" fxLayoutAlign="start center" class="user-info">
+            <img src="{{avatar}}" alt="user-image" width="50">
+            <p class="m-0">{{currentUser.full_name}} <br> <small><i>{{currentUser.user_name}}</i></small></p>
+        </div>
+        <div class="divider"></div>
+        <a mat-menu-item routerLink="/submit-property">
+            <mat-icon class="mat-icon-sm">add_circle</mat-icon>
+            <span>Submit Property</span>
+        </a>
+        <a mat-menu-item routerLink="/account/my-properties">
+            <mat-icon class="mat-icon-sm">home</mat-icon>
+            <span>My Properties</span>
+        </a>
+        <a mat-menu-item routerLink="/account/announcements">
+            <mat-icon class="mat-icon-sm">notifications_none</mat-icon>
+            <span [matBadge]="appService.Data.announcements.length"
+                [matBadgeHidden]="appService.Data.announcements.length == 0" matBadgeSize="small" matBadgeColor="warn"
+                matBadgeOverlap="false">Announcements</span>
+        </a>
+        <a mat-menu-item routerLink="/account/messages">
+            <mat-icon class="mat-icon-sm">chat_bubble_outline</mat-icon>
+            <span [matBadge]="appService.Data.messages.length" [matBadgeHidden]="appService.Data.messages.length == 0"
+                matBadgeSize="small" matBadgeColor="warn" matBadgeOverlap="false">Messages</span>
+        </a>
+        <a mat-menu-item routerLink="/account/favorites">
+            <mat-icon class="mat-icon-sm">favorite_border</mat-icon>
+            <span [matBadge]="appService.Data.favorites.length" [matBadgeHidden]="appService.Data.favorites.length == 0"
+                matBadgeSize="small" matBadgeColor="warn" matBadgeOverlap="false">Favorites</span>
+        </a>
+        <a mat-menu-item routerLink="/compare">
+            <mat-icon class="mat-icon-sm">compare_arrows</mat-icon>
+            <span [matBadge]="appService.Data.compareList.length"
+                [matBadgeHidden]="appService.Data.compareList.length == 0" matBadgeSize="small" matBadgeColor="warn"
+                matBadgeOverlap="false">Compare</span>
+        </a>
+        <a mat-menu-item routerLink="/account/profile">
+            <mat-icon class="mat-icon-sm">edit</mat-icon>
+            <span>Edit Profile</span>
+        </a>
+        <div class="divider"></div>
+        <a mat-menu-item (click)="logout()">
+            <mat-icon class="mat-icon-sm">power_settings_new</mat-icon>
+            <span>Sign Out</span>
+        </a>
+    </span>
+</mat-menu>

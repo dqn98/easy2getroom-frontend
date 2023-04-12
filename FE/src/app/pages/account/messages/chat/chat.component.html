@@ -1,0 +1,54 @@
+<div class="mesgs" *ngIf="recipientId">
+<!-- 
+    <div class="text-left">
+        <h3 style="margin-bottom: 8px !important;"><i class="fa fa-comments"></i>
+            {{recipient.fullName}}</h3>
+        <hr style="margin-top: 0 !important;" />
+    </div> -->
+    <div class="clearfix"></div>
+    <div class="msg_history" #scrollMe [scrollTop]="scrollMe.scrollHeight" *ngIf="chatMessages.length > 0">
+        <div *ngFor="let message of chatMessages" style="margin-bottom:2px;">
+            <div class="incoming_msg" *ngIf="message.status == 'Recipient'">
+                <div class="received_msg">
+                    <div class="received_withd_msg">
+                        <span class="time_date">
+                            {{message.sender.fullName}} |
+                            {{message.messageSent | date :  "shortTime"}}
+                        </span>
+                        <p>
+                            {{message.content}}
+                        </p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="outgoing_msg" *ngIf="message.status == 'Sent'">
+                <span class="time_date-receiver">
+                    {{message.messageSent | date :  "shortTime"}}
+                </span>
+                <div class="sent_msg">
+                    <p>
+                        {{message.content}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="msg_history" *ngIf="chatMessages.length===0">
+        <p style="font-size:small; color:#dedede; text-align:center">
+            No Message Found..
+        </p>
+    </div>
+
+    <div class="type_msg">
+        <div class="input_msg_write">
+            <input type="text" class="write_msg" #msgInput
+                (keydown.enter)="sendMessage(msgInput.value);false;msgInput.value='';" placeholder="Type a message"
+                onfocus="this.placeholder=''" onblur="this.placeholder='Type a message'" />
+            <button class="msg_send_btn" type="button">
+                <i class="fa fa-paper-plane-o" aria-hidden="true"
+                    (click)="sendMessage(msgInput.value);false;msgInput.value='';"></i>
+            </button>
+        </div>
+    </div>
+</div>

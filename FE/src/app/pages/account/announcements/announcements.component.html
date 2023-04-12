@@ -1,0 +1,65 @@
+<mat-form-field appearance="outline" class="w-100">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter announcements" autocomplete="off">
+</mat-form-field>
+<div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+        <!-- Content Column -->
+        <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef> Content </th>
+            <td mat-cell *matCellDef="let announcement"> {{announcement.content}}</td>
+        </ng-container>
+
+        <!-- Type Column -->
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let announcement">
+                <mat-chip-list aria-label="Type">
+                    <mat-chip color="accent">{{announcement.type}}
+                        <mat-icon>{{announcement.icon}}</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let announcement"> {{announcement.date | date:'medium'}}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="isRead">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let announcement">
+                <button matTooltip="Mark unread" (click)="markUnread(announcement)" matTooltipPosition="after"
+                    *ngIf="announcement.isRead == true" mat-icon-button aria-label="Unread" title="Mark unread">
+                    <mat-icon>
+                        mark_email_read
+                    </mat-icon>
+                </button>
+                <button matTooltip="Mark read" (click)="markRead(announcement)" matTooltipPosition="after"
+                    *ngIf="announcement.isRead == false" mat-icon-button aria-label="Read" title="Mark read">
+                    <mat-icon>
+                        markunread
+                    </mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Remove </th>
+            <td mat-cell *matCellDef="let announcement">
+                <button mat-icon-button (click)="remove(announcement)" color="warn" matTooltip="Remove" class="remove">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let announcement; columns: displayedColumns;">
+        </tr>
+    </table>
+    <p *ngIf="dataSource?.data.length === 0" class="py-5 mb-0 text-center">No data available</p>
+</div>
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

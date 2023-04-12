@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="float-left">
+                    <i class="fa fa-comments"></i> Chats
+                </h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="messaging">
+                    <div class="inbox_msg">
+                        <div class="inbox_people">
+                            <div class="headind_srch">
+                                <div class="srch_bar">
+                                    <div class="stylish-input-group">
+                                        <input type="text" class="search-bar" placeholder="Search"
+                                            (keyup)="applyFilter($event.target.value)">
+                                        <span class="input-group-addon">
+                                            <button type="button"> <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inbox_chat">
+                                <div class="chat_list active_chat" *ngFor="let user of usersList">
+                                    <a href="javascript:void(0)" (click)="chooseUser(user)">
+                                        <div class="chat_people">
+                                            <div class="chat_img"> <img src="{{user.image}}" alt="sunil">
+                                            </div>
+                                            <div class="chat_ib">
+                                                <h5>
+                                                    {{user.fullName}}
+
+                                                    <i class="mr-2 fa fa-comments"></i>
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

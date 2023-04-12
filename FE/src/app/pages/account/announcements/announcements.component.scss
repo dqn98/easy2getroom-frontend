@@ -1,0 +1,25 @@
+.mat-table {
+    width: 100% !important;
+    .mat-column-content {
+        word-wrap: break-word !important;
+        white-space: unset !important;
+        flex: 0 0 50%;
+        width: 50% !important;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
+    }
+    .mat-column-type {
+        flex: 0 0 15%;
+    }
+    .mat-column-date {
+        flex: 0 0 15%;
+    }
+    .mat-column-isRead {
+        flex: 0 0 10%;
+    }
+    .mat-column-actions {
+        flex: 0 0 10%;
+    }
+}

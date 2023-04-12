@@ -1,0 +1,71 @@
+<mat-toolbar id="top-toolbar" class="top-toolbar">
+  <div class="theme-container" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <span fxHide="false" fxHide.gt-sm>
+        <button mat-button (click)="sidenavToggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </span>
+      <app-contacts fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-sm></app-contacts>
+    </div>
+    <app-social-icons fxLayout="row" fxLayoutAlign="start center" fxShow="false" fxShow.gt-md></app-social-icons>
+    <div fxLayout="row" fxLayoutAlign="end center" class="">
+      <app-currency></app-currency>
+      <app-lang></app-lang>
+      <app-user-menu *ngIf="authService.loggedIn()" (logoutEmitter)="logout()"></app-user-menu>
+      <a mat-button *ngIf="!authService.loggedIn()" routerLink="/login">
+        <mat-icon class="mat-icon-sm">person</mat-icon>
+        <span fxShow="false" fxShow.gt-sm class="mx-1 uppercase">login</span>
+      </a>
+    </div>
+  </div>
+</mat-toolbar>
+<mat-toolbar id="main-toolbar" class="mat-elevation-z2">
+  <div class="theme-container" fxLayout="row" fxLayoutAlign="space-between center">
+    <a class="logo" routerLink="/">
+      <app-logo></app-logo>
+    </a>
+    <div fxShow="false" fxShow.gt-sm class="horizontal-menu">
+      <app-horizontal-menu [menuParentId]="0"></app-horizontal-menu>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <a routerLink="/account/announcements" mat-icon-button matTooltip="Announcements" fxShow="false" fxShow.gt-md>
+        <mat-icon [matBadge]="appService.Data.announcements.length"
+          [matBadgeHidden]="appService.Data.announcements.length == 0" matBadgeSize="small" matBadgeColor="warn">
+          notifications_none</mat-icon>
+      </a>
+      <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Messages" fxShow="false" fxShow.gt-md>
+        <mat-icon [matBadge]="appService.Data.messages.length" [matBadgeHidden]="appService.Data.messages.length == 0"
+          matBadgeSize="small" matBadgeColor="warn">
+          chat_bubble_outline</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngFor="let message of messages">
+          <a mat-menu-item routerLink="/account/messages/{{message.senderId}}" (click)="this.appService.Data.messages = []">
+            <mat-icon class="mat-icon-sm">chat_bubble_outline</mat-icon>
+            <span>New message from: {{message.sender.fullName}}</span>
+          </a>
+        </div>
+      </mat-menu>
+      <!-- <a routerLink="/account/messages" mat-icon-button matTooltip="Messages" fxShow="false" fxShow.gt-md>
+        <mat-icon [matBadge]="appService.Data.messages.length" [matBadgeHidden]="appService.Data.messages.length == 0"
+          matBadgeSize="small" matBadgeColor="warn">
+          chat_bubble_outline</mat-icon>
+      </a> -->
+      <a routerLink="/account/favorites" mat-icon-button matTooltip="Favorites" fxShow="false" fxShow.gt-md>
+        <mat-icon [matBadge]="appService.Data.favorites.length" [matBadgeHidden]="appService.Data.favorites.length == 0"
+          matBadgeSize="small" matBadgeColor="warn">favorite_border</mat-icon>
+      </a>
+      <a routerLink="/compare" mat-icon-button matTooltip="Compare list" fxShow="false" fxShow.gt-md class="mr-3 ml-2">
+        <mat-icon [matBadge]="appService.Data.compareList.length"
+          [matBadgeHidden]="appService.Data.compareList.length == 0" matBadgeSize="small" matBadgeColor="warn">
+          compare_arrows</mat-icon>
+      </a>
+      <a routerLink="/submit-property" mat-mini-fab color="primary" fxHide="false" fxHide.gt-xs>
+        <mat-icon>add</mat-icon>
+      </a>
+      <a routerLink="/submit-property" mat-raised-button color="primary" fxShow="false" fxShow.gt-xs
+        class="uppercase">submit property</a>
+    </div>
+  </div>
+</mat-toolbar>

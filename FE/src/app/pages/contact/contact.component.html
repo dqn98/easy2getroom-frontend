@@ -1,0 +1,45 @@
+
+
+<div class="px-3">
+
+    <div class="theme-container">
+        <mat-card class="main-content-header mb-5">
+            
+            <div fxLayout="row wrap" fxLayoutAlign="space-around">
+                <div fxFlex="100" fxFlex.gt-xs="33.3">
+                    <div fxLayout="column" fxLayoutAlign="center center" class="text-center">
+                        <mat-icon color="primary" class="mat-icon-lg">home</mat-icon>
+                        <h3 class="primary-color py-1">ADDRESS :</h3>
+                        <span>01 Vo Van Ngan, Thu Duc, Ho Chi Minh City</span>
+                    </div>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <mat-icon color="primary" class="mat-icon-lg">call</mat-icon>
+                        <h3 class="primary-color py-1">PHONES :</h3>
+                        <span>(84) 34 862 11 88</span>
+                        <span>(84) 34 862 11 88</span>
+                    </div>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="33.3" ngClass.xs="mt-2">
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                        <mat-icon color="primary" class="mat-icon-lg">mail_outline</mat-icon>
+                        <h3 class="primary-color py-1">E-MAIL :</h3>
+                        <span>contact@easy2getroom.com</span>
+                        <span>info@easy2getroom.com</span>
+                    </div>
+                </div>
+                <div class="divider w-100 mt-3"></div>
+                <h3 class="w-100 text-center py-3">CONTACT US</h3>           
+            </div> 
+            
+            <div class="mt-5 contact-map">
+                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [mapTypeControl]="true" [fullscreenControl]="true">
+                    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="false" ></agm-marker>
+                </agm-map>
+            </div>
+
+        </mat-card>  
+    </div>
+
+</div>
